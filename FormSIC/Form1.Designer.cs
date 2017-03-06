@@ -54,23 +54,23 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tệpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tạoMớiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mởToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lưuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.thoátToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.côngCụToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.quayLạiUndoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UndoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.thêmMớiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cậpNhậtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.xóaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.xuấtFileExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hướngDẫnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hướngDẫnOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hướngDẫnOfflineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.guideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.guideOnlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.guideOfflineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thôngTinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.thôngTinSảnPhẩmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.thôngTinCLBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.informationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.informationCLBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gvdata)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -85,11 +85,9 @@
             this.gvdata.ReadOnly = true;
             this.gvdata.Size = new System.Drawing.Size(793, 391);
             this.gvdata.TabIndex = 0;
-            this.gvdata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvdata_CellClick);
             // 
             // timer
             // 
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // lb_so_may
             // 
@@ -138,7 +136,6 @@
             this.tb_somay.Name = "tb_somay";
             this.tb_somay.Size = new System.Drawing.Size(203, 26);
             this.tb_somay.TabIndex = 30;
-            this.tb_somay.TextChanged += new System.EventHandler(this.tb_somay_TextChanged);
             // 
             // tb_tensv
             // 
@@ -192,7 +189,6 @@
             this.bt_them.TabIndex = 36;
             this.bt_them.Text = "Thêm mới";
             this.bt_them.UseVisualStyleBackColor = true;
-            this.bt_them.Click += new System.EventHandler(this.bt_them_Click);
             // 
             // tb_nd
             // 
@@ -250,7 +246,6 @@
             this.bt_excel.TabIndex = 49;
             this.bt_excel.Text = "Xuất file Excel";
             this.bt_excel.UseVisualStyleBackColor = true;
-            this.bt_excel.Click += new System.EventHandler(this.bt_excel_Click);
             // 
             // bt_capnhat
             // 
@@ -262,7 +257,6 @@
             this.bt_capnhat.TabIndex = 50;
             this.bt_capnhat.Text = "Cập nhật";
             this.bt_capnhat.UseVisualStyleBackColor = true;
-            this.bt_capnhat.Click += new System.EventHandler(this.bt_capnhat_Click);
             // 
             // bt_xoa
             // 
@@ -274,7 +268,6 @@
             this.bt_xoa.TabIndex = 51;
             this.bt_xoa.Text = "Xóa";
             this.bt_xoa.UseVisualStyleBackColor = true;
-            this.bt_xoa.Click += new System.EventHandler(this.bt_xoa_Click);
             // 
             // menuStrip1
             // 
@@ -282,7 +275,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tệpToolStripMenuItem,
             this.côngCụToolStripMenuItem,
-            this.hướngDẫnToolStripMenuItem,
+            this.guideToolStripMenuItem,
             this.thôngTinToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -293,68 +286,68 @@
             // tệpToolStripMenuItem
             // 
             this.tệpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tạoMớiToolStripMenuItem,
-            this.mởToolStripMenuItem,
-            this.lưuToolStripMenuItem,
-            this.thoátToolStripMenuItem});
+            this.createNewToolStripMenuItem,
+            this.OpenToolStripMenuItem,
+            this.SaveToolStripMenuItem,
+            this.ExitToolStripMenuItem});
             this.tệpToolStripMenuItem.Name = "tệpToolStripMenuItem";
             this.tệpToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.tệpToolStripMenuItem.Text = "Tệp";
             // 
-            // tạoMớiToolStripMenuItem
+            // createNewToolStripMenuItem
             // 
-            this.tạoMớiToolStripMenuItem.Image = global::FormSIC.Properties.Resources.New;
-            this.tạoMớiToolStripMenuItem.Name = "tạoMớiToolStripMenuItem";
-            this.tạoMớiToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.tạoMớiToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.tạoMớiToolStripMenuItem.Text = "Tạo mới";
+            this.createNewToolStripMenuItem.Image = global::FormSIC.Properties.Resources.New;
+            this.createNewToolStripMenuItem.Name = "createNewToolStripMenuItem";
+            this.createNewToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.createNewToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.createNewToolStripMenuItem.Text = "Tạo mới";
             // 
-            // mởToolStripMenuItem
+            // OpenToolStripMenuItem
             // 
-            this.mởToolStripMenuItem.Image = global::FormSIC.Properties.Resources.open;
-            this.mởToolStripMenuItem.Name = "mởToolStripMenuItem";
-            this.mởToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.mởToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.mởToolStripMenuItem.Text = "Mở";
+            this.OpenToolStripMenuItem.Image = global::FormSIC.Properties.Resources.open;
+            this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
+            this.OpenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.OpenToolStripMenuItem.Text = "Mở";
             // 
-            // lưuToolStripMenuItem
+            // SaveToolStripMenuItem
             // 
-            this.lưuToolStripMenuItem.Image = global::FormSIC.Properties.Resources.Save;
-            this.lưuToolStripMenuItem.Name = "lưuToolStripMenuItem";
-            this.lưuToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.lưuToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.lưuToolStripMenuItem.Text = "Lưu";
+            this.SaveToolStripMenuItem.Image = global::FormSIC.Properties.Resources.Save;
+            this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
+            this.SaveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.SaveToolStripMenuItem.Text = "Lưu";
             // 
-            // thoátToolStripMenuItem
+            // ExitToolStripMenuItem
             // 
-            this.thoátToolStripMenuItem.Image = global::FormSIC.Properties.Resources.exit;
-            this.thoátToolStripMenuItem.Name = "thoátToolStripMenuItem";
-            this.thoátToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.ExitToolStripMenuItem.Image = global::FormSIC.Properties.Resources.exit;
+            this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
+            this.ExitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.E)));
-            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.thoátToolStripMenuItem.Text = "Thoát";
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.ExitToolStripMenuItem.Text = "Thoát";
             // 
             // côngCụToolStripMenuItem
             // 
             this.côngCụToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.quayLạiUndoToolStripMenuItem,
+            this.UndoToolStripMenuItem,
             this.redoToolStripMenuItem,
-            this.thêmMớiToolStripMenuItem,
-            this.cậpNhậtToolStripMenuItem,
-            this.xóaToolStripMenuItem,
-            this.xuấtFileExcelToolStripMenuItem});
+            this.addToolStripMenuItem,
+            this.updateToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.FileExcelToolStripMenuItem});
             this.côngCụToolStripMenuItem.Name = "côngCụToolStripMenuItem";
             this.côngCụToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.côngCụToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.côngCụToolStripMenuItem.Text = "Công cụ";
             // 
-            // quayLạiUndoToolStripMenuItem
+            // UndoToolStripMenuItem
             // 
-            this.quayLạiUndoToolStripMenuItem.Image = global::FormSIC.Properties.Resources.undo;
-            this.quayLạiUndoToolStripMenuItem.Name = "quayLạiUndoToolStripMenuItem";
-            this.quayLạiUndoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.quayLạiUndoToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.quayLạiUndoToolStripMenuItem.Text = "Undo";
+            this.UndoToolStripMenuItem.Image = global::FormSIC.Properties.Resources.undo;
+            this.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem";
+            this.UndoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.UndoToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.UndoToolStripMenuItem.Text = "Undo";
             // 
             // redoToolStripMenuItem
             // 
@@ -364,90 +357,90 @@
             this.redoToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             // 
-            // thêmMớiToolStripMenuItem
+            // addToolStripMenuItem
             // 
-            this.thêmMớiToolStripMenuItem.Image = global::FormSIC.Properties.Resources.add;
-            this.thêmMớiToolStripMenuItem.Name = "thêmMớiToolStripMenuItem";
-            this.thêmMớiToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.thêmMớiToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.thêmMớiToolStripMenuItem.Text = "Thêm mới";
+            this.addToolStripMenuItem.Image = global::FormSIC.Properties.Resources.add;
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.addToolStripMenuItem.Text = "Thêm mới";
             // 
-            // cậpNhậtToolStripMenuItem
+            // updateToolStripMenuItem
             // 
-            this.cậpNhậtToolStripMenuItem.Image = global::FormSIC.Properties.Resources.edit;
-            this.cậpNhậtToolStripMenuItem.Name = "cậpNhậtToolStripMenuItem";
-            this.cậpNhậtToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.cậpNhậtToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.cậpNhậtToolStripMenuItem.Text = "Cập nhật";
+            this.updateToolStripMenuItem.Image = global::FormSIC.Properties.Resources.edit;
+            this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
+            this.updateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.updateToolStripMenuItem.Text = "Cập nhật";
             // 
-            // xóaToolStripMenuItem
+            // deleteToolStripMenuItem
             // 
-            this.xóaToolStripMenuItem.Image = global::FormSIC.Properties.Resources.Delete;
-            this.xóaToolStripMenuItem.Name = "xóaToolStripMenuItem";
-            this.xóaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.xóaToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.xóaToolStripMenuItem.Text = "Xóa";
+            this.deleteToolStripMenuItem.Image = global::FormSIC.Properties.Resources.Delete;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.deleteToolStripMenuItem.Text = "Xóa";
             // 
-            // xuấtFileExcelToolStripMenuItem
+            // FileExcelToolStripMenuItem
             // 
-            this.xuấtFileExcelToolStripMenuItem.Image = global::FormSIC.Properties.Resources.Save;
-            this.xuấtFileExcelToolStripMenuItem.Name = "xuấtFileExcelToolStripMenuItem";
-            this.xuấtFileExcelToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.FileExcelToolStripMenuItem.Image = global::FormSIC.Properties.Resources.Save;
+            this.FileExcelToolStripMenuItem.Name = "FileExcelToolStripMenuItem";
+            this.FileExcelToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.xuấtFileExcelToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.xuấtFileExcelToolStripMenuItem.Text = "Xuất File Excel";
+            this.FileExcelToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.FileExcelToolStripMenuItem.Text = "Xuất File Excel";
             // 
-            // hướngDẫnToolStripMenuItem
+            // guideToolStripMenuItem
             // 
-            this.hướngDẫnToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.hướngDẫnOnlineToolStripMenuItem,
-            this.hướngDẫnOfflineToolStripMenuItem});
-            this.hướngDẫnToolStripMenuItem.Name = "hướngDẫnToolStripMenuItem";
-            this.hướngDẫnToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
-            this.hướngDẫnToolStripMenuItem.Text = "Hướng dẫn";
+            this.guideToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.guideOnlineToolStripMenuItem,
+            this.guideOfflineToolStripMenuItem});
+            this.guideToolStripMenuItem.Name = "guideToolStripMenuItem";
+            this.guideToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.guideToolStripMenuItem.Text = "Hướng dẫn";
             // 
-            // hướngDẫnOnlineToolStripMenuItem
+            // guideOnlineToolStripMenuItem
             // 
-            this.hướngDẫnOnlineToolStripMenuItem.Image = global::FormSIC.Properties.Resources.help_online;
-            this.hướngDẫnOnlineToolStripMenuItem.Name = "hướngDẫnOnlineToolStripMenuItem";
-            this.hướngDẫnOnlineToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.hướngDẫnOnlineToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
-            this.hướngDẫnOnlineToolStripMenuItem.Text = "Hướng dẫn Online";
+            this.guideOnlineToolStripMenuItem.Image = global::FormSIC.Properties.Resources.help_online;
+            this.guideOnlineToolStripMenuItem.Name = "guideOnlineToolStripMenuItem";
+            this.guideOnlineToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.guideOnlineToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.guideOnlineToolStripMenuItem.Text = "Hướng dẫn Online";
             // 
-            // hướngDẫnOfflineToolStripMenuItem
+            // guideOfflineToolStripMenuItem
             // 
-            this.hướngDẫnOfflineToolStripMenuItem.Image = global::FormSIC.Properties.Resources.help_offline;
-            this.hướngDẫnOfflineToolStripMenuItem.Name = "hướngDẫnOfflineToolStripMenuItem";
-            this.hướngDẫnOfflineToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.guideOfflineToolStripMenuItem.Image = global::FormSIC.Properties.Resources.help_offline;
+            this.guideOfflineToolStripMenuItem.Name = "guideOfflineToolStripMenuItem";
+            this.guideOfflineToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.H)));
-            this.hướngDẫnOfflineToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
-            this.hướngDẫnOfflineToolStripMenuItem.Text = "Hướng dẫn Offline";
+            this.guideOfflineToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.guideOfflineToolStripMenuItem.Text = "Hướng dẫn Offline";
             // 
             // thôngTinToolStripMenuItem
             // 
             this.thôngTinToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.thôngTinSảnPhẩmToolStripMenuItem,
-            this.thôngTinCLBToolStripMenuItem});
+            this.informationToolStripMenuItem,
+            this.informationCLBToolStripMenuItem});
             this.thôngTinToolStripMenuItem.Name = "thôngTinToolStripMenuItem";
             this.thôngTinToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.thôngTinToolStripMenuItem.Text = "Thông tin";
             // 
-            // thôngTinSảnPhẩmToolStripMenuItem
+            // informationToolStripMenuItem
             // 
-            this.thôngTinSảnPhẩmToolStripMenuItem.Image = global::FormSIC.Properties.Resources.Info;
-            this.thôngTinSảnPhẩmToolStripMenuItem.Name = "thôngTinSảnPhẩmToolStripMenuItem";
-            this.thôngTinSảnPhẩmToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.thôngTinSảnPhẩmToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.thôngTinSảnPhẩmToolStripMenuItem.Text = "Thông tin sản phẩm";
+            this.informationToolStripMenuItem.Image = global::FormSIC.Properties.Resources.Info;
+            this.informationToolStripMenuItem.Name = "informationToolStripMenuItem";
+            this.informationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.informationToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.informationToolStripMenuItem.Text = "Thông tin sản phẩm";
             // 
-            // thôngTinCLBToolStripMenuItem
+            // informationCLBToolStripMenuItem
             // 
-            this.thôngTinCLBToolStripMenuItem.Image = global::FormSIC.Properties.Resources.logo_SIC1;
-            this.thôngTinCLBToolStripMenuItem.Name = "thôngTinCLBToolStripMenuItem";
-            this.thôngTinCLBToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.informationCLBToolStripMenuItem.Image = global::FormSIC.Properties.Resources.logo_SIC1;
+            this.informationCLBToolStripMenuItem.Name = "informationCLBToolStripMenuItem";
+            this.informationCLBToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.I)));
-            this.thôngTinCLBToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.thôngTinCLBToolStripMenuItem.Text = "Thông tin CLB";
+            this.informationCLBToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.informationCLBToolStripMenuItem.Text = "Thông tin CLB";
             // 
             // label3
             // 
@@ -531,23 +524,23 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tệpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tạoMớiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mởToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lưuToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem thoátToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createNewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SaveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem côngCụToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem thêmMớiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cậpNhậtToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem xóaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem xuấtFileExcelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem hướngDẫnToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem hướngDẫnOnlineToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem hướngDẫnOfflineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FileExcelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem guideToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem guideOnlineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem guideOfflineToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thôngTinToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem thôngTinSảnPhẩmToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem thôngTinCLBToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem informationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem informationCLBToolStripMenuItem;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ToolStripMenuItem quayLạiUndoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem UndoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
     }
 }

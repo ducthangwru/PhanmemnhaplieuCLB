@@ -16,8 +16,8 @@ namespace FormSIC
 {
     public partial class Form1 : Form
     {
-        System.Data.DataTable dataTable = new System.Data.DataTable();
-        int indexRow;
+        private InputInformation input;
+        
 
         public Form1()
         {
@@ -25,205 +25,27 @@ namespace FormSIC
             timer.Enabled = true;
             MessageBoxManager.Yes = "Có";
             MessageBoxManager.No = "Không";
+            MessageBoxManager.Cancel = "Hủy";
             MessageBoxManager.Register();
+
+            input = new InputInformation(
+                tb_somay, tb_tensv, tb_msv, tb_sdt, tb_tenmay, tb_nd, tb_ghichu,
+                bt_them, bt_capnhat, bt_xoa, bt_excel,
+                timer,
+                gvdata,
+                saveFileDialog1);
+
+            input.changeData();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Console.WriteLine(gvdata.Rows.Count);
-            if(gvdata.Rows.Count <= 1)
-            {
-                e.Cancel = false;
-            }
-
-            else if (!saveFile() && gvdata.Rows.Count > 1)
-            {
-                
-                DialogResult dialogResult = MessageBox.Show
-                    ("Bạn có chắc chắn muốn thoát?", "Thoát", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (dialogResult == DialogResult.Yes)
-                    e.Cancel = false;
-
-                if (dialogResult == DialogResult.No)
-                    e.Cancel = true;
-            }
-        }
-
-        public bool checkData()
-        {
-            if (String.IsNullOrEmpty(tb_nd.Text) || String.IsNullOrEmpty(tb_tenmay.Text)
-                || String.IsNullOrEmpty(tb_msv.Text) || String.IsNullOrEmpty(tb_somay.Text) 
-                || String.IsNullOrEmpty(tb_tensv.Text) || String.IsNullOrEmpty(tb_sdt.Text))
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            if (checkData())
-            {
-                bt_them.Enabled = true;
-                timer.Stop();
-            } else
-            {
-                bt_them.Enabled = false;
-            }
-
-            if (!timer.Enabled)
-            {
-                timer.Enabled = true;
-            }
+            input.Form1_FormClosing(sender, e);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dataTable.Columns.Add("Số máy", typeof(int));
-            dataTable.Columns.Add("Tên SV", typeof(String));
-            dataTable.Columns.Add("MSV / CMT", typeof(String));
-            dataTable.Columns.Add("Số điện thoại", typeof(String));
-            dataTable.Columns.Add("Tên máy", typeof(String));
-            dataTable.Columns.Add("Nội dung", typeof(String));
-            dataTable.Columns.Add("Ghi chú", typeof(String));
-
-            gvdata.DataSource = dataTable;
-            gvdata.Columns[0].Width = 50;
-            gvdata.Columns[5].Width = 200;
+            input.Form1_Load(sender, e);
         }
-
-        private void tb_somay_TextChanged(object sender, EventArgs e)
-        {
-            int result;
-            if (tb_somay.Text != "")
-            {
-                if (!int.TryParse(tb_somay.Text, out result))
-                {
-                    tb_somay.Text = "";
-                    MessageBox.Show("Yêu cầu nhập số nguyên!", "Lỗi nhập!",
-                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void gvdata_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if(e.RowIndex >= 0)
-            {
-                indexRow = e.RowIndex;
-                DataGridViewRow row = gvdata.Rows[indexRow];
-                tb_somay.Text = row.Cells[0].Value.ToString();
-                tb_tensv.Text = row.Cells[1].Value.ToString();
-                tb_msv.Text = row.Cells[2].Value.ToString();
-                tb_sdt.Text = row.Cells[3].Value.ToString();
-                tb_tenmay.Text = row.Cells[4].Value.ToString();
-                tb_nd.Text = row.Cells[5].Value.ToString();
-                tb_ghichu.Text = row.Cells[6].Value.ToString();
-                bt_capnhat.Enabled = true;
-                bt_xoa.Enabled = true;
-            }
-        }
-
-        private void bt_capnhat_Click(object sender, EventArgs e)
-        {
-            DialogResult dialogResult = MessageBox.Show
-                ("Bạn có chắc chắn muốn cập nhật dữ liệu của hàng này?", 
-                "Cập nhật dữ liệu", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.Yes)
-            {
-                DataGridViewRow newData = gvdata.Rows[indexRow];
-                newData.Cells[0].Value = tb_somay.Text;
-                newData.Cells[1].Value = tb_tensv.Text;
-                newData.Cells[2].Value = tb_msv.Text;
-                newData.Cells[3].Value = tb_sdt.Text;
-                newData.Cells[4].Value = tb_tenmay.Text;
-                newData.Cells[5].Value = tb_nd.Text;
-                newData.Cells[6].Value = tb_ghichu.Text;
-                bt_capnhat.Enabled = false;
-            }
-        }
-        private void bt_them_Click(object sender, EventArgs e)
-        {
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn thêm?", "Thêm mới", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.Yes)
-            {
-                if (String.IsNullOrEmpty(tb_ghichu.Text)) 
-                {
-                    dataTable.Rows.Add(tb_somay.Text, tb_tensv.Text,
-                tb_msv.Text, tb_sdt.Text, tb_tenmay.Text, tb_nd.Text, "Không");
-                }
-                else
-                {
-                    dataTable.Rows.Add(tb_somay.Text, tb_tensv.Text,
-                    tb_msv.Text, tb_sdt.Text, tb_tenmay.Text, tb_nd.Text, tb_ghichu.Text);
-                }
-                gvdata.DataSource = dataTable;
-            }
-        }
-
-        private void bt_xoa_Click(object sender, EventArgs e)
-        {
-            DialogResult dialogResult = MessageBox.Show
-                ("Bạn có chắc chắn muốn xóa dữ liệu của hàng này?", 
-                "Xóa dữ liệu", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.Yes)
-            {
-                gvdata.Rows.RemoveAt(indexRow);
-                tb_somay.Text = tb_sdt.Text = tb_nd.Text = tb_msv.Text = tb_ghichu.Text
-                = tb_tenmay.Text = tb_tensv.Text = "";
-                bt_xoa.Enabled = false;
-            }
-        }
-
-        private void bt_excel_Click(object sender, EventArgs e)
-        {
-            saveFile();
-        }
-
-        private bool saveFile()
-        {
-            saveFileDialog1.InitialDirectory = "C:";
-            saveFileDialog1.Title = "Xuất File Excel";
-            saveFileDialog1.FileName = "";
-            saveFileDialog1.Filter = "Excel Files(2007/2010/2013)|*.xlsx|Excel Files(2003)|*.xls";
-            if (saveFileDialog1.ShowDialog() != DialogResult.Cancel)
-            {
-                app excel
-                    = new app();
-                excel.Application.Workbooks.Add(Type.Missing);﻿
-
-                excel.Columns.ColumnWidth = 20;
-
-                for (int i = 1; i < gvdata.Columns.Count + 1; i++)
-                {
-                    excel.Cells[1, i] = gvdata.Columns[i - 1].HeaderText;
-                }
-
-                for (int i = 0; i < gvdata.Rows.Count; i++)
-                {
-                    for (int j = 0; j < gvdata.Columns.Count; j++)
-                    {
-                        if (gvdata.Rows[i].Cells[j].Value != null)
-                        {
-                            excel.Cells[i + 2, j + 1] = gvdata.Rows[i].Cells[j].Value.ToString();
-                        }
-                    }
-                }
-
-                excel.ActiveWorkbook.SaveCopyAs(saveFileDialog1.FileName.ToString());
-                excel.ActiveWorkbook.Saved = true;
-                excel.Quit();
-                MessageBox.Show("Lưu File thành công!", "Lưu file",
-                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                return true;
-            }
-
-            MessageBox.Show("Lỗi: Lưu File thất bại!", "Lưu file",
-                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            return false;
-        }
-
     }
 }
