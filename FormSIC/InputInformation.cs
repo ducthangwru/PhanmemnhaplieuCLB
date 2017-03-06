@@ -32,6 +32,7 @@ namespace FormSIC
 
         private DataTable dataTable = new DataTable();
         int indexRow;
+        private bool check = false;
 
         public InputInformation(TextBox somay, TextBox tensv, TextBox msv, TextBox sdt, 
             TextBox tenmay, TextBox nd, TextBox ghichu,
@@ -130,10 +131,15 @@ namespace FormSIC
 
             else if (!saveFile() && gvdata.Rows.Count > 1)
             {
-
                 DialogResult dialogResult = MessageBox.Show
                     ("Bạn có chắc chắn muốn thoát?", "Thoát", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                if (dialogResult == DialogResult.OK)
+
+                if(dialogResult == DialogResult.OK && !check)
+                {
+                    DialogResult dialog = MessageBox.Show
+                        ("Bạn chưa lưu File!", "Lỗi thoát", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                if (dialogResult == DialogResult.OK && check)
                     e.Cancel = false;
 
                 if (dialogResult == DialogResult.Cancel)
@@ -266,12 +272,13 @@ namespace FormSIC
                 MessageBox.Show("Lưu File thành công!", "Lưu file",
                      MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                check = true;
                 return true;
             }
 
             MessageBox.Show("Lỗi: Lưu File thất bại!", "Lưu file",
                      MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            check = false;
             return false;
         }
     }
