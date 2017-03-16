@@ -30,9 +30,37 @@ namespace FormSIC
 
         private SaveFileDialog saveFileDialog1;
 
-        private DataTable dataTable = new DataTable();
+        DataTable dataTable = new DataTable();
+
+        public DataTable TableData
+        {
+            get { return dataTable; }
+            set { dataTable = value; }
+        }
+
+        public DataGridView GvData
+        {
+            get { return gvdata; }
+            set { gvdata = value; }
+        }
+
         int indexRow;
         private bool check = false;
+
+        Stack<string> undoStack = new Stack<string>();
+        Stack<string> redoStack = new Stack<string>();
+
+        public Stack<string> Undo
+        {
+            get { return undoStack; }
+            set { undoStack = value; }
+        }
+
+        public Stack<string> Redo
+        {
+            get { return redoStack; }
+            set { redoStack = value; }
+        }
 
         public InputInformation(TextBox somay, TextBox tensv, TextBox msv, TextBox sdt, 
             TextBox tenmay, TextBox nd, TextBox ghichu,
@@ -67,8 +95,13 @@ namespace FormSIC
             this.bt_them.Click += bt_them_Click;
             this.bt_xoa.Click += bt_xoa_Click;
             this.bt_excel.Click += bt_excel_Click;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             this.tb_somay.TextChanged += new System.EventHandler(this.tb_somay_TextChanged);
+            this.tb_tensv.TextChanged += new System.EventHandler(this.tb_tensv_TextChanged);
+            this.tb_msv.TextChanged += new System.EventHandler(this.tb_msv_TextChanged);
+            this.tb_sdt.TextChanged += new System.EventHandler(this.tb_sdt_TextChanged);
+            this.tb_tenmay.TextChanged += new System.EventHandler(this.tb_tenmay_TextChanged);
+            this.tb_nd.TextChanged += new System.EventHandler(this.tb_nd_TextChanged);
+            this.tb_ghichu.TextChanged += new System.EventHandler(this.tb_ghichu_TextChanged);
             this.gvdata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvdata_CellClick);
         }
 
@@ -83,22 +116,6 @@ namespace FormSIC
             return true;
         }
 
-        public void timer_Tick(object sender, EventArgs e)
-        {
-            if (checkData())
-            {
-                bt_them.Enabled = true;
-                timer.Stop();
-            } else
-            {
-                bt_them.Enabled = false;
-            }
-
-            if (!timer.Enabled)
-            {
-                timer.Enabled = true;
-            }
-        }
 
         public void Form1_Load(object sender, EventArgs e)
         {
@@ -117,7 +134,7 @@ namespace FormSIC
 
         public void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Console.WriteLine(gvdata.Rows.Count);
+  
             if (gvdata.Rows.Count <= 1)
             {
                 DialogResult dialogResult = MessageBox.Show
@@ -138,6 +155,10 @@ namespace FormSIC
                 {
                     DialogResult dialog = MessageBox.Show
                         ("Bạn chưa lưu File!", "Lỗi thoát", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (dialog == DialogResult.OK)
+                    {
+                        e.Cancel = true;
+                    }
                 }
                 if (dialogResult == DialogResult.OK && check)
                     e.Cancel = false;
@@ -158,7 +179,41 @@ namespace FormSIC
                     MessageBox.Show("Yêu cầu nhập số nguyên!", "Lỗi nhập!",
                      MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                else
+                {
+                    undoStack.Push("somay:" + tb_somay.Text);
+                }
             }
+        }
+
+        public void tb_tensv_TextChanged(object sender, EventArgs e)
+        {
+            undoStack.Push("tensv:" + tb_tensv.Text);
+        }
+
+        public void tb_msv_TextChanged(object sender, EventArgs e)
+        {
+            undoStack.Push("msv:" + tb_msv.Text);
+        }
+
+        public void tb_sdt_TextChanged(object sender, EventArgs e)
+        {
+            undoStack.Push("sdt:" + tb_sdt.Text);
+        }
+
+        public void tb_tenmay_TextChanged(object sender, EventArgs e)
+        {
+            undoStack.Push("tenmay:" + tb_tenmay.Text);
+        }
+
+        public void tb_nd_TextChanged(object sender, EventArgs e)
+        {
+            undoStack.Push("nd:" + tb_nd.Text);
+        }
+
+        public void tb_ghichu_TextChanged(object sender, EventArgs e)
+        {
+            undoStack.Push("ghichu:" + tb_ghichu.Text);
         }
 
         public void gvdata_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -181,54 +236,17 @@ namespace FormSIC
 
         private void bt_capnhat_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show
-                ("Bạn có chắc chắn muốn cập nhật dữ liệu của hàng này?", 
-                "Cập nhật dữ liệu", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.OK)
-            {
-                DataGridViewRow newData = gvdata.Rows[indexRow];
-                newData.Cells[0].Value = tb_somay.Text;
-                newData.Cells[1].Value = tb_tensv.Text;
-                newData.Cells[2].Value = tb_msv.Text;
-                newData.Cells[3].Value = tb_sdt.Text;
-                newData.Cells[4].Value = tb_tenmay.Text;
-                newData.Cells[5].Value = tb_nd.Text;
-                newData.Cells[6].Value = tb_ghichu.Text;
-                bt_capnhat.Enabled = false;
-            }
+            update();
         }
+
         private void bt_them_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn thêm?", "Thêm mới", 
-                MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.OK)
-            {
-                if (String.IsNullOrEmpty(tb_ghichu.Text)) 
-                {
-                    dataTable.Rows.Add(tb_somay.Text, tb_tensv.Text,
-                tb_msv.Text, tb_sdt.Text, tb_tenmay.Text, tb_nd.Text, "Không");
-                }
-                else
-                {
-                    dataTable.Rows.Add(tb_somay.Text, tb_tensv.Text,
-                    tb_msv.Text, tb_sdt.Text, tb_tenmay.Text, tb_nd.Text, tb_ghichu.Text);
-                }
-                gvdata.DataSource = dataTable;
-            }
+            add();
         }
 
         private void bt_xoa_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show
-                ("Bạn có chắc chắn muốn xóa dữ liệu của hàng này?", 
-                "Xóa dữ liệu", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.OK)
-            {
-                gvdata.Rows.RemoveAt(indexRow);
-                tb_somay.Text = tb_sdt.Text = tb_nd.Text = tb_msv.Text = tb_ghichu.Text
-                = tb_tenmay.Text = tb_tensv.Text = "";
-                bt_xoa.Enabled = false;
-            }
+            delete();
         }
 
         private void bt_excel_Click(object sender, EventArgs e)
@@ -238,15 +256,17 @@ namespace FormSIC
 
         public bool saveFile()
         {
-            saveFileDialog1.InitialDirectory = "C:";
-            saveFileDialog1.Title = "Xuất File Excel";
-            saveFileDialog1.FileName = "";
-            saveFileDialog1.Filter = "Excel Files(2007/2010/2013)|*.xlsx|Excel Files(2003)|*.xls";
-            if (saveFileDialog1.ShowDialog() != DialogResult.Cancel)
+            if(gvdata.RowCount > 1)
             {
-                app excel
-                    = new app();
-                excel.Application.Workbooks.Add(Type.Missing);﻿
+                saveFileDialog1.InitialDirectory = "C:";
+                saveFileDialog1.Title = "Xuất File Excel";
+                saveFileDialog1.FileName = "";
+                saveFileDialog1.Filter = "Excel Files(2007/2010/2013)|*.xlsx|Excel Files(2003)|*.xls";
+                if (saveFileDialog1.ShowDialog() != DialogResult.Cancel)
+                {
+                    app excel
+                        = new app();
+                    excel.Application.Workbooks.Add(Type.Missing);﻿
 
                 excel.Columns.ColumnWidth = 20;
 
@@ -274,12 +294,158 @@ namespace FormSIC
 
                 check = true;
                 return true;
+                }
+
+                MessageBox.Show("Lưu File thất bại!", "Lỗi",
+                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+                check = false;
+                return false;
             }
 
-            MessageBox.Show("Lỗi: Lưu File thất bại!", "Lưu file",
-                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Không có gì để lưu!", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
             check = false;
             return false;
+        }
+
+        public void reset()
+        {
+            tb_somay.Text = "";
+            tb_tensv.Text = "";
+            tb_sdt.Text = "";
+            tb_msv.Text = "";
+            tb_nd.Text = "";
+            tb_ghichu.Text = "";
+            tb_tenmay.Text = "";
+        }
+
+        public void undo()
+        {
+            if(undoStack.Count != 0)
+            {
+                string s = undoStack.Pop();
+                redoStack.Push(s);
+                string[] words = s.Split(':');
+            
+                if(words[0].Equals("somay"))    tb_somay.Text = words[1];
+
+                else if (words[0].Equals("tensv"))   tb_tensv.Text = words[1];
+
+                if (words[0].Equals("msv"))     tb_msv.Text = words[1];
+
+                if (words[0].Equals("sdt"))     tb_sdt.Text = words[1];
+
+                if (words[0].Equals("tenmay"))  tb_tenmay.Text = words[1];
+
+                if (words[0].Equals("nd"))      tb_nd.Text = words[1];
+
+                if (words[0].Equals("ghichu"))  tb_ghichu.Text = words[1];
+            }
+        }
+
+        public void redo()
+        {
+            if (redoStack.Count != 0)
+            {
+                string s = redoStack.Pop();
+
+                string[] words = s.Split(':');
+
+                if (words[0].Equals("somay")) tb_somay.Text = words[1];
+
+                else if (words[0].Equals("tensv")) tb_tensv.Text = words[1];
+
+                if (words[0].Equals("msv")) tb_msv.Text = words[1];
+
+                if (words[0].Equals("sdt")) tb_sdt.Text = words[1];
+
+                if (words[0].Equals("tenmay")) tb_tenmay.Text = words[1];
+
+                if (words[0].Equals("nd")) tb_nd.Text = words[1];
+
+                if (words[0].Equals("ghichu")) tb_ghichu.Text = words[1];
+            }
+        }
+
+        public void add()
+        {
+            if(checkData())
+            {
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn thêm?", "Thêm mới",
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.OK)
+                {
+                    if (String.IsNullOrEmpty(tb_ghichu.Text))
+                    {
+                        dataTable.Rows.Add(tb_somay.Text, tb_tensv.Text,
+                    tb_msv.Text, tb_sdt.Text, tb_tenmay.Text, tb_nd.Text, "Không");
+                    }
+                    else
+                    {
+                        dataTable.Rows.Add(tb_somay.Text, tb_tensv.Text,
+                        tb_msv.Text, tb_sdt.Text, tb_tenmay.Text, tb_nd.Text, tb_ghichu.Text);
+                    }
+                    gvdata.DataSource = dataTable;
+                }
+
+                reset();
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("Trường thông tin đang trống!", "Lỗi",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void update()
+        {
+            if(gvdata.RowCount > 1 && checkData())
+            {
+                DialogResult dialogResult = MessageBox.Show
+                ("Bạn có chắc chắn muốn cập nhật dữ liệu của hàng này?",
+                "Cập nhật dữ liệu", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.OK)
+                {
+                    DataGridViewRow newData = gvdata.Rows[indexRow];
+                    newData.Cells[0].Value = tb_somay.Text;
+                    newData.Cells[1].Value = tb_tensv.Text;
+                    newData.Cells[2].Value = tb_msv.Text;
+                    newData.Cells[3].Value = tb_sdt.Text;
+                    newData.Cells[4].Value = tb_tenmay.Text;
+                    newData.Cells[5].Value = tb_nd.Text;
+                    newData.Cells[6].Value = tb_ghichu.Text;
+                    bt_capnhat.Enabled = false;
+                }
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show
+                ("Không có trường nào để cập nhật!",
+                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void delete()
+        {
+            if(gvdata.RowCount > 1)
+            {
+                DialogResult dialogResult = MessageBox.Show
+                ("Bạn có chắc chắn muốn xóa dữ liệu của hàng này?",
+                "Xóa dữ liệu", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.OK)
+                {
+                    gvdata.Rows.RemoveAt(indexRow);
+                    tb_somay.Text = tb_sdt.Text = tb_nd.Text = tb_msv.Text = tb_ghichu.Text
+                    = tb_tenmay.Text = tb_tensv.Text = "";
+                    bt_xoa.Enabled = false;
+                }
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show
+                ("Không có trường nào để xóa!",
+                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
