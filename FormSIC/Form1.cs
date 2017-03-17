@@ -33,7 +33,8 @@ namespace FormSIC
                 bt_them, bt_capnhat, bt_xoa, bt_excel,
                 timer,
                 gvdata,
-                saveFileDialog1);
+                saveFileDialog1,
+                cms_menu);
 
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             input.changeData();
@@ -167,5 +168,37 @@ namespace FormSIC
             string readText = File.ReadAllText("info_SIC.txt");
             DialogResult dialog = MessageBox.Show(readText, "Thông tin CLB", MessageBoxButtons.OK);
         }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            input.undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            input.redo();
+        }
+
+        private void addNewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            input.add();
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            input.update();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            input.delete();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            input.saveFile();
+        }
+
+        
     }
 }

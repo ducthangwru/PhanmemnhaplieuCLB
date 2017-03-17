@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace FormSIC
 
         private SaveFileDialog saveFileDialog1;
 
+        private ContextMenuStrip context;
+
         DataTable dataTable = new DataTable();
 
         public DataTable TableData
@@ -42,6 +45,12 @@ namespace FormSIC
         {
             get { return gvdata; }
             set { gvdata = value; }
+        }
+
+        public ContextMenuStrip Context
+        {
+            get { return context; }
+            set { context = value; }
         }
 
         int indexRow;
@@ -67,7 +76,8 @@ namespace FormSIC
             Button them, Button capnhat, Button xoa, Button excel,
             Timer timer,
             DataGridView data,
-            SaveFileDialog save)
+            SaveFileDialog save,
+            ContextMenuStrip context)
         {
             tb_nd = nd;
             tb_somay = somay;
@@ -87,6 +97,8 @@ namespace FormSIC
             gvdata = data;
 
             saveFileDialog1 = save;
+
+            this.context = context;
         }
 
         public void changeData()
@@ -103,6 +115,7 @@ namespace FormSIC
             this.tb_nd.TextChanged += new System.EventHandler(this.tb_nd_TextChanged);
             this.tb_ghichu.TextChanged += new System.EventHandler(this.tb_ghichu_TextChanged);
             this.gvdata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvdata_CellClick);
+            this.gvdata.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvdata_CellMouseClick);
         }
 
         public bool checkData()
@@ -232,6 +245,16 @@ namespace FormSIC
                 bt_capnhat.Enabled = true;
                 bt_xoa.Enabled = true;
             }
+        }
+
+        private void gvdata_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+      
+             if (e.Button == MouseButtons.Right)
+             {
+                 int currentMouseOverRow = gvdata.HitTest(e.X, e.Y).RowIndex;
+                 context.Show(gvdata, new Point(e.X, e.Y));
+             }
         }
 
         private void bt_capnhat_Click(object sender, EventArgs e)
